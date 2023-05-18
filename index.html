@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web App</title>
+
+    <!-- Import jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h2>Data Entry Form</h2>
+
+    <!-- Form for data input -->
+    <form id="dataForm">
+        <label for="id">ID (for editing/deleting):</label><br>
+        <input type="text" id="id" name="id"><br>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content"></textarea><br>
+
+        <input type="submit" value="Submit">
+        <button id="editButton">Edit</button>
+        <button id="deleteButton">Delete</button>
+    </form>
+
+    <script>
+        // handle form submission for creating new document
+        $('#dataForm').submit(function (e) {
+            e.preventDefault();
+
+            var title = $('#title').val();
+            var content = $('#content').val();
+
+            $.ajax({
+                url: 'http://localhost:3000/saveData',
+                type: 'POST',
+                data: JSON.stringify({ title: title, content: content }),
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        // handle edit button click for updating existing document
+        $('#editButton').click(function (e) {
+            e.preventDefault();
+
+            var id = $('#id').val();
+            var title = $('#title').val();
+            var content = $('#content').val();
+
+            $.ajax({
+                url: 'http://localhost:3000/editData',
+                type: 'POST',
+                data: JSON.stringify({ id: id, title: title, content: content }),
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        // handle delete button click for deleting existing document
+        $('#deleteButton').click(function (e) {
+            e.preventDefault();
+
+            var id = $('#id').val();
+
+            $.ajax({
+                url: 'http://localhost:3000/deleteData',
+                type: 'POST',
+                data: JSON.stringify({ id: id }),
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
