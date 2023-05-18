@@ -10,7 +10,8 @@ First, setup your SQL database in Azure. Then enter the relevant info inside the
 		encrypt: true, // for azure
 		trustServerCertificate: true, // change to true for local dev / self-signed certs
 	},
-};```
+};
+```
 
 Now to get started,
 1. CD into the root directory
